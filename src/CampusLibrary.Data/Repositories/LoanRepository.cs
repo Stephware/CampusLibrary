@@ -16,7 +16,7 @@ public class LoanRepository : ILoanRepository
 
     public Task<List<Loan>> GetAllAsync(int? memberId = null, bool openOnly = false)
     {
-        var query = _context.Loans.AsNoTracking().Include(l => l.Book);
+        IQueryable<Loan> query = _context.Loans.AsNoTracking().Include(l => l.Book);
         if (memberId.HasValue)
             query = query.Where(l => l.MemberId == memberId.Value);
         if (openOnly)
