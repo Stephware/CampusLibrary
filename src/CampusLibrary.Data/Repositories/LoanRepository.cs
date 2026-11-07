@@ -16,7 +16,7 @@ public class LoanRepository : ILoanRepository
 
     public Task<List<Loan>> GetAllAsync(int? memberId = null, bool openOnly = false)
     {
-        var query = _context.Loans.AsNoTracking();
+        IQueryable<Loan> query = _context.Loans.AsNoTracking().Include(l => l.Book);
         if (memberId.HasValue)
             query = query.Where(l => l.MemberId == memberId.Value);
         if (openOnly)
@@ -32,7 +32,7 @@ public class LoanRepository : ILoanRepository
             .ToListAsync();
 
     public Task<Loan?> GetByIdAsync(int id) =>
-        _context.Loans.AsNoTracking().FirstOrDefaultAsync(l => l.Id == id);
+        _context.Loans.AsNoTracking().Include(l => l.Book).FirstOrDefaultAsync(l => l.Id == id);
 
     public Task<bool> HasOpenLoanAsync(int bookId) =>
         _context.Loans.AnyAsync(l => l.BookId == bookId && l.ReturnDate == null);

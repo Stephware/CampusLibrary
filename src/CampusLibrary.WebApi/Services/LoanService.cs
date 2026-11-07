@@ -32,8 +32,8 @@ public class LoanService : ILoanService
 
     public async Task<LoanDto> BorrowBookAsync(CreateLoanDto dto)
     {
-        if (await _books.GetByIdAsync(dto.BookId) == null)
-            throw new KeyNotFoundException("Book not found.");
+        var book = await _books.GetByIdAsync(dto.BookId)
+            ?? throw new KeyNotFoundException("Book not found.");
         if (await _members.GetByIdAsync(dto.MemberId) == null)
             throw new KeyNotFoundException("Member not found.");
         if (await _repository.HasOpenLoanAsync(dto.BookId))
@@ -46,7 +46,7 @@ public class LoanService : ILoanService
             BorrowDate = now, DueDate = now.AddDays(14)
         });
         _logger.LogInformation("Created loan {Id} for book {BookId}", loan.Id, loan.BookId);
-        return ToDto(loan);
+        return ToDto(loan, book);
     }
 
     public async Task ReturnBookAsync(int id)
@@ -58,9 +58,11 @@ public class LoanService : ILoanService
         _logger.LogInformation("Returned loan with ID {Id}", id);
     }
 
-    private static LoanDto ToDto(Loan loan) => new()
+    private static LoanDto ToDto(Loan loan, Book? book = null) => new()
     {
         Id = loan.Id, BookId = loan.BookId, MemberId = loan.MemberId,
+        BookTitle = (book ?? loan.Book)?.Title,
+        BookAuthor = (book ?? loan.Book)?.Author,
         BorrowDate = DateTime.SpecifyKind(loan.BorrowDate, DateTimeKind.Utc),
         DueDate = DateTime.SpecifyKind(loan.DueDate, DateTimeKind.Utc),
         ReturnDate = loan.ReturnDate.HasValue

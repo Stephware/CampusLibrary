@@ -33,7 +33,7 @@ class LibraryApiContractTest {
                         val request = reader.readLine().substringBefore(" HTTP/")
                         requests.add(request)
                         while (!reader.readLine().isNullOrEmpty()) { }
-                        val body = """[{"id":7,"bookId":2,"memberId":1,"borrowDate":"2026-11-07T00:00:00","dueDate":"2026-11-21T00:00:00","returnDate":null}]"""
+                        val body = """[{"id":7,"bookId":2,"bookTitle":"Design Patterns","bookAuthor":"Erich Gamma","memberId":1,"borrowDate":"2026-11-07T00:00:00","dueDate":"2026-11-21T00:00:00","returnDate":null}]"""
                         val response = when (request) {
                             "GET /api/loans?memberId=1&openOnly=true" ->
                                 "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nContent-Length: ${body.toByteArray().size}\r\nConnection: close\r\n\r\n$body"
@@ -54,6 +54,8 @@ class LibraryApiContractTest {
                 .build().create(LibraryApi::class.java)
             val loans = api.getMemberLoans(1)
             assertEquals(7, loans.single().id)
+            assertEquals("Design Patterns", loans.single().bookTitle)
+            assertEquals("Erich Gamma", loans.single().bookAuthor)
             assertTrue(api.returnBook(7).isSuccessful)
             assertEquals(listOf("GET /api/loans?memberId=1&openOnly=true", "POST /api/loans/7/return"), requests)
         } finally {
