@@ -1,5 +1,7 @@
 # Milestone 4 — Developer documentation
 
+> Historical milestone record. Statements and verification below describe the original task, not a fresh run. For current setup and known limitations, use [the latest report index](../INDEX.md).
+
 ## Summary
 
 Implemented Members CRUD and Loans read/borrow/return endpoints using the existing layers.

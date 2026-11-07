@@ -5,8 +5,14 @@ data class Book(
     val title: String,
     val isbn: String,
     val author: String?,
-    val yearPublished: Int?
+    val yearPublished: Int?,
+    val isAvailable: Boolean = false
 )
+
+object DemoMember {
+    const val ID = 1
+    const val LABEL = "Demo member · #1"
+}
 
 data class Member(
     val id: Int,

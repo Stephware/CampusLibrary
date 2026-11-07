@@ -1,5 +1,8 @@
 # Flowcharts — Android App MVVM Architecture
 
+> Historical milestone record. Statements and verification below describe the original task, not a fresh run. For current setup and known limitations, use [the latest report index](../INDEX.md).
+> Correction (2026-11-07): the original completion claim did not include a successful Android build. The 18:17 review subsequently fixed and verified the contract/build. Corrected endpoint/return/SDK examples below are documentation repairs, not evidence those checks ran at 17:11.
+
 **Milestones:** 6-7  
 **Date:** 2026-11-07  
 
@@ -171,7 +174,7 @@ sequenceDiagram
     VM->>VM: _uiState = Loading
     VM->>REPO: getMemberLoans(memberId=1)
     REPO->>API: api.getMemberLoans(1)
-    API->>SERVER: GET /api/loans/member/1
+    API->>SERVER: GET /api/loans?memberId=1&openOnly=true
     SERVER-->>API: List<Loan> (filtered returnDate=null)
     API-->>REPO: Result.success(loans)
     REPO-->>VM: Result.success(loans)
@@ -188,9 +191,9 @@ sequenceDiagram
         VM->>REPO: returnBook(loanId)
         REPO->>API: api.returnBook(loanId)
         API->>SERVER: POST /api/loans/{id}/return
-        SERVER-->>API: Loan object (returnDate=now)
-        API-->>REPO: Result.success(loan)
-        REPO-->>VM: Result.success(loan)
+        SERVER-->>API: 204 No Content (no JSON body)
+        API-->>REPO: Response<Unit> success
+        REPO-->>VM: Result.success(Unit)
         
         VM->>VM: loadLoans() (refresh)
         VM->>VM: _uiState = Success(updatedLoans, isReturning={})
@@ -471,4 +474,4 @@ sequenceDiagram
 - ✅ Loading/success/error states
 - ✅ CORS configured for emulator access
 
-**The Android app is production-ready with clean architecture.**
+**Local educational demo only.** No authentication, supported production SQL host, trusted deployment HTTPS or release signing is established by this milestone.

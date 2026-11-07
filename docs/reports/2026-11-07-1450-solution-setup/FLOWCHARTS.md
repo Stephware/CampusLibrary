@@ -1,5 +1,8 @@
 # Flowcharts — Solution Setup
 
+> Historical milestone record. Statements and verification below describe the original task, not a fresh run. For current setup and known limitations, use [the latest report index](../INDEX.md).
+> Milestone 1 records were split between 06:50 and 14:50 folders; the developer report in this folder explains the provenance. Original ports, SDK 37 proposal, wrapper assumptions and future schema are historical, not current instructions.
+
 **Milestone:** 1  
 **Date:** 2026-11-07  
 

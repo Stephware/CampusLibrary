@@ -97,9 +97,41 @@ class Milestone4Tests(unittest.TestCase):
         self.call('POST', '/api/loans', {'bookId': 2147483647, 'memberId': 1}, 404)
         self.call('POST', '/api/loans', {'bookId': 1, 'memberId': 2147483647}, 404)
 
+    def assert_availability(self, book, available):
+        detail, _ = self.call('GET', f"/api/books/{book['id']}")
+        books, _ = self.call('GET', '/api/books')
+        listed = next(b for b in books if b['id'] == book['id'])
+        self.assertEqual(listed, detail)
+        self.assertIs(detail['isAvailable'], available)
+        for field in ('id', 'title', 'isbn', 'author', 'yearPublished'):
+            self.assertEqual(detail[field], book[field])
+
+    def test_development_swagger_ui_and_availability_schema(self):
+        with urllib.request.urlopen(BASE + '/swagger/index.html', timeout=30) as response:
+            self.assertEqual(response.status, 200)
+            html = response.read().decode()
+            self.assertIn('src="./swagger-ui-bundle.js"', html)
+            self.assertIn('src="index.js"', html)
+        with urllib.request.urlopen(BASE + '/swagger/index.js', timeout=30) as response:
+            self.assertEqual(response.status, 200)
+            script = response.read().decode()
+            self.assertIn('SwaggerUIBundle', script)
+            self.assertIn('/openapi/v1.json', script)
+        document, _ = self.call('GET', '/openapi/v1.json')
+        schema = document['components']['schemas']['BookDto']
+        self.assertEqual(schema['properties']['isAvailable']['type'], 'boolean')
+        self.assertIn('/api/Books', document['paths'])
+        self.assertIn('/api/Loans', document['paths'])
+
     def test_borrow_return_history_filters_and_reborrow(self):
         member, book = self.member(), self.book()
+        other = self.book()
+        self.assertIs(book['isAvailable'], True)
+        self.assert_availability(book, True)
         loan = self.borrow(book, member)
+        self.assert_availability(book, False)
+        self.assert_availability(other, True)
+        self.call('DELETE', f"/api/books/{other['id']}", status=204)
         borrowed = dt.datetime.fromisoformat(loan['borrowDate'].replace('Z', '+00:00'))
         due = dt.datetime.fromisoformat(loan['dueDate'].replace('Z', '+00:00'))
         self.assertEqual(due - borrowed, dt.timedelta(days=14))
@@ -114,6 +146,7 @@ class Milestone4Tests(unittest.TestCase):
         self.call('POST', f"/api/loans/{loan['id']}/return", status=204)
         returned, _ = self.call('GET', f"/api/loans/{loan['id']}")
         self.assertIsNotNone(returned['returnDate'])
+        self.assert_availability(book, True)
         self.call('POST', f"/api/loans/{loan['id']}/return", status=409)
         again, _ = self.call('GET', f"/api/loans/{loan['id']}")
         self.assertEqual(again['returnDate'], returned['returnDate'])
@@ -123,6 +156,7 @@ class Milestone4Tests(unittest.TestCase):
         self.call('DELETE', f"/api/books/{book['id']}", status=409)
         new_loan = self.borrow(book, member)
         self.assertNotEqual(new_loan['id'], loan['id'])
+        self.assert_availability(book, False)
         history, _ = self.call('GET', f"/api/loans?memberId={member['id']}")
         self.assertEqual(len(history), 2)
         self.call('POST', f"/api/loans/{new_loan['id']}/return", status=204)

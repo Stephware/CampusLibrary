@@ -1,5 +1,7 @@
 # CampusLibrary — Run and verify the reviewed solution
 
+> Historical milestone record. Statements and verification below describe the original task, not a fresh run. For current setup and known limitations, use [the latest report index](../INDEX.md).
+
 ## Prerequisites
 
 - Existing .NET10 SDK and working local SQL connection settings. The current Mac container uses port14335. LocalDB is not supported on macOS.

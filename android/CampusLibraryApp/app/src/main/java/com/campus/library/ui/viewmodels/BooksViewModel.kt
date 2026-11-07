@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.campus.library.data.models.Book
 import com.campus.library.data.repository.LibraryRepository
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
@@ -15,28 +15,18 @@ sealed class BooksUiState {
     data class Error(val message: String) : BooksUiState()
 }
 
-class BooksViewModel : ViewModel() {
-    private val repository = LibraryRepository()
-
+class BooksViewModel(private val repository: LibraryRepository = LibraryRepository()) : ViewModel() {
     private val _uiState = MutableStateFlow<BooksUiState>(BooksUiState.Loading)
-    val uiState: StateFlow<BooksUiState> = _uiState.asStateFlow()
-
-    init {
-        loadBooks()
-    }
+    val uiState = _uiState.asStateFlow()
+    private var loadJob: Job? = null
 
     fun loadBooks() {
-        viewModelScope.launch {
+        if (loadJob?.isActive == true) return
+        loadJob = viewModelScope.launch {
             _uiState.value = BooksUiState.Loading
             repository.getBooks().fold(
-                onSuccess = { books ->
-                    _uiState.value = BooksUiState.Success(books)
-                },
-                onFailure = { error ->
-                    _uiState.value = BooksUiState.Error(
-                        error.message ?: "Failed to load books"
-                    )
-                }
+                onSuccess = { _uiState.value = BooksUiState.Success(it) },
+                onFailure = { _uiState.value = BooksUiState.Error("The catalog couldn’t be loaded. Check your connection and try again.") }
             )
         }
     }

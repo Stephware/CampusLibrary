@@ -1,5 +1,7 @@
 # Developer Documentation — Solution Setup
 
+> Historical milestone record. Statements and verification below describe the original task, not a fresh run. For current setup and known limitations, use [the latest report index](../INDEX.md).
+
 **Milestone:** 1  
 **Task:** Create CampusLibrary solution structure with 4 projects  
 **Date:** 2026-11-07 06:50  

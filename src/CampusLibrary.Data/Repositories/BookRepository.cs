@@ -21,6 +21,17 @@ public class BookRepository : IBookRepository
             .ToListAsync();
     }
 
+    public Task<List<BookAvailability>> GetAllWithAvailabilityAsync() =>
+        _context.Books.AsNoTracking()
+            .Select(b => new BookAvailability(b, !b.Loans.Any(l => l.ReturnDate == null)))
+            .ToListAsync();
+
+    public Task<BookAvailability?> GetByIdWithAvailabilityAsync(int id) =>
+        _context.Books.AsNoTracking()
+            .Where(b => b.Id == id)
+            .Select(b => new BookAvailability(b, !b.Loans.Any(l => l.ReturnDate == null)))
+            .FirstOrDefaultAsync();
+
     public async Task<Book?> GetByIdAsync(int id)
     {
         return await _context.Books
@@ -36,13 +47,12 @@ public class BookRepository : IBookRepository
 
     public async Task UpdateAsync(Book book)
     {
-        _context.Books.Update(book);
         await SaveAsync();
     }
 
     public async Task DeleteAsync(int id)
     {
-        var book = await GetByIdAsync(id);
+        var book = await _context.Books.FindAsync(id);
         if (book != null)
         {
             _context.Books.Remove(book);
@@ -76,7 +86,6 @@ public class BookRepository : IBookRepository
     public async Task<bool> ExistsByIsbnAsync(string isbn, int? excludeId = null)
     {
         return await _context.Books
-            .AsNoTracking()
             .AnyAsync(b => b.Isbn == isbn && (!excludeId.HasValue || b.Id != excludeId.Value));
     }
 }

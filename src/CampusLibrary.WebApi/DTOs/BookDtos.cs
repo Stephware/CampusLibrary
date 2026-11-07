@@ -5,6 +5,7 @@ namespace CampusLibrary.WebApi.DTOs;
 public class BookDto
 {
     public int Id { get; set; }
+    public bool IsAvailable { get; set; }
     public required string Title { get; set; }
     public required string Isbn { get; set; }
     public string? Author { get; set; }

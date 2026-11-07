@@ -1,5 +1,7 @@
 # CampusLibrary — Final code review
 
+> Historical milestone record. Statements and verification below describe the original task, not a fresh run. For current setup and known limitations, use [the latest report index](../INDEX.md).
+
 ## Summary
 
 Reviewed reported Milestones 1–7 component by component rather than rebuilding them.

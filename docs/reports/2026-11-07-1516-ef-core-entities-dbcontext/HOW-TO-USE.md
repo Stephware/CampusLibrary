@@ -1,5 +1,7 @@
 # How to Use — EF Core Entities, DbContext & Database
 
+> Historical milestone record. Statements and verification below describe the original task, not a fresh run. For current setup and known limitations, use [the latest report index](../INDEX.md).
+
 **Milestone:** 2 — Entity Framework Core Setup  
 **Date:** 2026-11-07  
 **For:** Developers building on the data layer

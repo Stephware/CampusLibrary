@@ -1,5 +1,8 @@
 # Developer Documentation — Android App with MVVM Architecture
 
+> Historical milestone record. Statements and verification below describe the original task, not a fresh run. For current setup and known limitations, use [the latest report index](../INDEX.md).
+> Correction (2026-11-07): the original completion claim did not include a successful Android build. The 18:17 review subsequently fixed and verified the contract/build. Corrected endpoint/return/SDK examples below are documentation repairs, not evidence those checks ran at 17:11.
+
 **Milestones:** 6-7  
 **Task:** Android Kotlin app (book list, detail, borrow, my loans) with MVVM + Compose  
 **Date:** 2026-11-07 17:11  
@@ -39,7 +42,7 @@ Implemented a complete Android app for CampusLibrary with MVVM architecture and 
 
 ### API Layer
 2. `android/.../data/api/LibraryApi.kt` — Retrofit interface (5 endpoints)
-3. `android/.../data/api/RetrofitClient.kt` — Retrofit client configuration with OkHttp logging
+3. `android/.../data/api/RetrofitClient.kt` — Retrofit client configuration (the original logging claim was later removed)
 
 ### Repository Layer
 4. `android/.../data/repository/LibraryRepository.kt` — Repository pattern with Result<T> handling
@@ -101,14 +104,17 @@ interface LibraryApi {
     @GET("books/{id}")
     suspend fun getBook(@Path("id") id: Int): Book
 
-    @GET("loans/member/{memberId}")
-    suspend fun getMemberLoans(@Path("memberId") memberId: Int): List<Loan>
+    @GET("loans")
+    suspend fun getMemberLoans(
+        @Query("memberId") memberId: Int,
+        @Query("openOnly") openOnly: Boolean = true
+    ): List<Loan>
 
     @POST("loans")
     suspend fun borrowBook(@Body request: CreateLoanRequest): Loan
 
     @POST("loans/{id}/return")
-    suspend fun returnBook(@Path("id") loanId: Int): Loan
+    suspend fun returnBook(@Path("id") loanId: Int): Response<Unit>
 }
 ```
 
@@ -117,10 +123,10 @@ interface LibraryApi {
 ```kotlin
 object RetrofitClient {
     // Android emulator uses 10.0.2.2 to reach host's localhost
-    private const val BASE_URL = "http://10.0.2.2:5143/api/"
+    // API URL is generated per build variant in app/build.gradle.kts.
 
     val api: LibraryApi = Retrofit.Builder()
-        .baseUrl(BASE_URL)
+        .baseUrl(BuildConfig.API_BASE_URL)
         .addConverterFactory(GsonConverterFactory.create(gson))
         .build()
         .create(LibraryApi::class.java)
@@ -131,7 +137,7 @@ object RetrofitClient {
 - Android emulator uses `10.0.2.2` to access host machine's localhost
 - Port `5143` is WebApi port (may vary — check `dotnet run` output)
 - Retrofit with Gson converter
-- OkHttp logging interceptor for debugging
+- Current client has no body-logging interceptor; the old logging claim was incorrect.
 
 ### Repository Pattern
 
@@ -285,7 +291,7 @@ fun CampusLibraryApp() {
   - "Borrow This Book" button
   - Success dialog after borrowing
 - **States:** Loading, Success, Error
-- **Business logic:** Duplicate ISBN check (409 Conflict handled as "already on loan")
+- **Business logic:** Open-loan check (409 Conflict means this book already has an open loan, regardless of member)
 
 ### 3. My Loans Screen
 - **Features:**
@@ -321,7 +327,7 @@ builder.Services.AddCors(options =>
 app.UseCors("AndroidEmulator");
 ```
 
-**Why needed:** Android emulator cannot reach `localhost` directly; uses `10.0.2.2` as alias for host machine.
+**Correction:** Native Retrofit is not governed by browser CORS. The existing CORS policy is retained, but emulator connectivity depends on the `10.0.2.2` host alias, API port and debug network policy, not CORS.
 
 ### API Endpoints Used
 
@@ -330,12 +336,12 @@ app.UseCors("AndroidEmulator");
 | GET | `/api/books` | Get all books |
 | GET | `/api/books/{id}` | Get single book |
 | POST | `/api/loans` | Borrow book (create loan) |
-| GET | `/api/loans/member/{memberId}` | Get member's active loans |
+| GET | `/api/loans?memberId={memberId}&openOnly=true` | Get member's active loans |
 | POST | `/api/loans/{id}/return` | Return book |
 
 ---
 
-## Dependencies (gradle/libs.versions.toml)
+## Dependencies (original sketch, not the current version catalog)
 
 ```toml
 [libraries]
@@ -348,7 +354,7 @@ androidx-lifecycle-viewmodel-compose = "androidx.lifecycle:lifecycle-viewmodel-c
 androidx-compose-material3 = "androidx.compose.material3:material3"
 ```
 
-**Note:** These are referenced in `build.gradle.kts` but would need to be added formally to the gradle config.
+**Correction:** Current Retrofit/Gson and lifecycle dependencies are declared directly in `app/build.gradle.kts`; no logging-interceptor dependency is installed. The TOML sketch above is historical, not a block to paste into the build.
 
 ---
 
@@ -500,7 +506,7 @@ android/CampusLibraryApp/app/src/main/java/com/campus/library/
 
 ### Not Implemented (Out of Scope)
 
-❌ Authentication/login — Hardcoded member ID (S001 - Alice Johnson) for demo  
+❌ Authentication/login — Numeric demo member ID 1 (seed student ID S001) for demo
 ❌ Member registration/signup  
 ❌ Book search/filtering  
 ❌ Loan history (only active loans shown)  
@@ -517,7 +523,7 @@ These can be added in future milestones if needed.
 ### Running the App
 
 **Prerequisites:**
-1. Android Studio with SDK 26+ installed
+1. Android Studio with platform SDK 35/build-tools 34.0.0 and JDK 17 installed
 2. Android emulator running (API level 26-37)
 3. WebApi running: `cd src/CampusLibrary.WebApi && dotnet run`
 4. SQL Server container running: `docker ps` (should show campuslibrary-mssql)
@@ -602,7 +608,7 @@ This is expected — Milestones 6-7 focus on core MVVM app structure and API int
 
 ## Environment Details
 
-- **Android:** Kotlin, Jetpack Compose, min SDK 26, target SDK 37
+- **Android:** Kotlin, Jetpack Compose, min SDK 26, compile/target SDK 35
 - **.NET:** .NET 10, Web API at port 5143
 - **Database:** SQL Server (port 14335)
 - **Emulator:** Android emulator with API level 26-37

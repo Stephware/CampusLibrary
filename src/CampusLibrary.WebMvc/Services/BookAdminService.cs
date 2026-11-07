@@ -17,12 +17,13 @@ public class BookAdminService : IBookAdminService
     }
 
     public async Task<List<BookViewModel>> GetAllAsync() =>
-        (await _repository.GetAllAsync()).OrderBy(b => b.Title).Select(ToModel).ToList();
+        (await _repository.GetAllWithAvailabilityAsync()).OrderBy(b => b.Book.Title)
+            .Select(row => ToModel(row.Book, row.IsAvailable)).ToList();
 
     public async Task<BookViewModel?> GetByIdAsync(int id)
     {
-        var book = await _repository.GetByIdAsync(id);
-        return book == null ? null : ToModel(book);
+        var row = await _repository.GetByIdWithAvailabilityAsync(id);
+        return row == null ? null : ToModel(row.Book, row.IsAvailable);
     }
 
     public async Task CreateAsync(BookFormViewModel model)
@@ -61,9 +62,9 @@ public class BookAdminService : IBookAdminService
         _logger.LogInformation("Admin deleted book {Id}", id);
     }
 
-    private static BookViewModel ToModel(Book book) => new()
+    private static BookViewModel ToModel(Book book, bool isAvailable) => new()
     {
         Id = book.Id, Title = book.Title, Isbn = book.Isbn,
-        Author = book.Author, YearPublished = book.YearPublished
+        Author = book.Author, YearPublished = book.YearPublished, IsAvailable = isAvailable
     };
 }

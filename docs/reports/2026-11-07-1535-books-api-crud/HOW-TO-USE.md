@@ -1,5 +1,7 @@
 # How to Use — Books API CRUD
 
+> Historical milestone record. Statements and verification below describe the original task, not a fresh run. For current setup and known limitations, use [the latest report index](../INDEX.md).
+
 **Milestone:** 3 — Books API with Service-Repository Pattern  
 **Date:** 2026-11-07  
 **For:** Developers testing the API

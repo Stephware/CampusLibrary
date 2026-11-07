@@ -82,6 +82,9 @@ def main():
                                         cwd=ROOT, env=env)
                 if result.returncode:
                     print('API diagnostics:', log_path.read_text()[-16000:])
+                if '--browser' in sys.argv and result.returncode == 0:
+                    subprocess.run(['node', 'tests/verify_milestone5.mjs', mvc_url, url,
+                                    str(ROOT / '.impeccable/review/web')], cwd=ROOT, env=env, check=True)
                 if '--keep-running' in sys.argv:
                     print('API test URL:', url, flush=True)
                     input('Isolated apps ready for visual verification. Press Enter to stop and remove test database. ')

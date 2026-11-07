@@ -3,109 +3,41 @@ package com.campus.library.ui.screens
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.*
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.campus.library.data.models.Loan
-import com.campus.library.ui.viewmodels.LoansUiState
-import com.campus.library.ui.viewmodels.LoansViewModel
-import java.time.LocalDateTime
+import com.campus.library.ui.viewmodels.*
+import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MyLoansScreen(
-    onBackClick: () -> Unit,
-    viewModel: LoansViewModel = viewModel()
-) {
-    val uiState by viewModel.uiState.collectAsState()
-
-    LaunchedEffect(Unit) {
-        viewModel.loadLoans()
+fun MyLoansScreen(onBackClick: () -> Unit, viewModel: LoansViewModel = viewModel()) {
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val snackbar = remember { SnackbarHostState() }
+    RefreshOnResume { viewModel.loadLoans() }
+    val message = (uiState as? LoansUiState.Success)?.message
+    LaunchedEffect(message) {
+        if (message != null) { snackbar.showSnackbar(message); viewModel.clearMessage() }
     }
-
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text("My Loans") },
-                navigationIcon = {
-                    IconButton(onClick = onBackClick) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back")
-                    }
-                }
-            )
-        }
-    ) { padding ->
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-        ) {
+    LibraryScaffold("loans", { viewModel.loadLoans() }, onBackClick, snackbarHost = { SnackbarHost(snackbar) }) { padding ->
+        Column(Modifier.fillMaxSize().padding(padding)) {
             when (val state = uiState) {
-                is LoansUiState.Loading -> {
-                    CircularProgressIndicator(
-                        modifier = Modifier.align(Alignment.Center)
-                    )
-                }
+                LoansUiState.Loading -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) { CircularProgressIndicator() }
+                is LoansUiState.Error -> StateMessage("Loans unavailable", state.message, "Try again", { viewModel.loadLoans() })
                 is LoansUiState.Success -> {
-                    if (state.loans.isEmpty()) {
-                        Column(
-                            modifier = Modifier
-                                .align(Alignment.Center)
-                                .padding(32.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            Text(
-                                text = "No active loans",
-                                style = MaterialTheme.typography.bodyLarge
-                            )
-                            Spacer(modifier = Modifier.height(8.dp))
-                            Text(
-                                text = "Browse books to borrow",
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
+                    if (state.loans.isEmpty()) StateMessage("Nothing on loan", "You’re all caught up. Browse the catalog to find your next book.", "Browse catalog", onBackClick)
+                    else LazyColumn {
+                        item { PageHeading("My loans", "${state.loans.size} active ${if (state.loans.size == 1) "loan" else "loans"} · Keep track of your reading.") }
+                        items(state.loans, key = { it.id }) { loan ->
+                            LoanCard(loan, loan.id in state.isReturning, { viewModel.returnBook(loan.id) }, state.isReturning.isEmpty())
                         }
-                    } else {
-                        LazyColumn(
-                            contentPadding = PaddingValues(16.dp),
-                            verticalArrangement = Arrangement.spacedBy(12.dp)
-                        ) {
-                            items(state.loans) { loan ->
-                                LoanCard(
-                                    loan = loan,
-                                    isReturning = loan.id in state.isReturning,
-                                    onReturnClick = { viewModel.returnBook(loan.id) }
-                                )
-                            }
-                        }
-                    }
-                }
-                is LoansUiState.Error -> {
-                    Column(
-                        modifier = Modifier
-                            .align(Alignment.Center)
-                            .padding(32.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Text(
-                            text = state.message,
-                            style = MaterialTheme.typography.bodyLarge,
-                            color = MaterialTheme.colorScheme.error
-                        )
-                        Spacer(modifier = Modifier.height(16.dp))
-                        Button(onClick = { viewModel.loadLoans() }) {
-                            Text("Retry")
-                        }
+                        item { Spacer(Modifier.height(24.dp)) }
                     }
                 }
             }
@@ -114,89 +46,33 @@ fun MyLoansScreen(
 }
 
 @Composable
-fun LoanCard(
-    loan: Loan,
-    isReturning: Boolean,
-    onReturnClick: () -> Unit
-) {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
-    ) {
-        Column(
-            modifier = Modifier.padding(16.dp)
-        ) {
-            Text(
-                text = loan.book?.title ?: "Book ID: ${loan.bookId}",
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold
-            )
-
-            if (loan.book?.author != null) {
-                Spacer(modifier = Modifier.height(4.dp))
-                Text(
-                    text = "by ${loan.book.author}",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
+fun LoanCard(loan: Loan, isReturning: Boolean, onReturnClick: () -> Unit, canReturn: Boolean = true) {
+    val overdue = runCatching { LocalDate.parse(loan.dueDate.substringBefore("T")).isBefore(LocalDate.now()) }.getOrDefault(false)
+    Surface(color = MaterialTheme.colorScheme.surface) {
+        Column(Modifier.fillMaxWidth().padding(24.dp)) {
+            Text(loan.book?.title ?: "Book #${loan.bookId}", style = MaterialTheme.typography.titleLarge)
+            loan.book?.author?.let {
+                Spacer(Modifier.height(6.dp))
+                Text(it, style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
-
-            Spacer(modifier = Modifier.height(12.dp))
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Column {
-                    Text(
-                        text = "Borrowed",
-                        style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                    Text(
-                        text = formatDate(loan.borrowDate),
-                        style = MaterialTheme.typography.bodySmall
-                    )
-                }
-                Column(horizontalAlignment = Alignment.End) {
-                    Text(
-                        text = "Due",
-                        style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                    Text(
-                        text = formatDate(loan.dueDate),
-                        style = MaterialTheme.typography.bodySmall
-                    )
-                }
-            }
-
-            Spacer(modifier = Modifier.height(12.dp))
-
-            Button(
-                onClick = onReturnClick,
-                modifier = Modifier.fillMaxWidth(),
-                enabled = !isReturning
-            ) {
+            Spacer(Modifier.height(16.dp))
+            Text(if (overdue) "Overdue · Please return this book" else "On loan", style = MaterialTheme.typography.labelLarge, color = if (overdue) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary)
+            Spacer(Modifier.height(16.dp))
+            Metadata("Borrowed", formatDate(loan.borrowDate))
+            Metadata("Due", formatDate(loan.dueDate))
+            Spacer(Modifier.height(20.dp))
+            OutlinedButton(onClick = onReturnClick, enabled = canReturn && !isReturning, modifier = Modifier.fillMaxWidth().heightIn(min = 52.dp)) {
                 if (isReturning) {
-                    CircularProgressIndicator(
-                        modifier = Modifier.size(24.dp),
-                        color = MaterialTheme.colorScheme.onPrimary
-                    )
-                    Spacer(modifier = Modifier.width(8.dp))
+                    CircularProgressIndicator(Modifier.size(20.dp), strokeWidth = 2.dp)
+                    Spacer(Modifier.width(12.dp))
                 }
-                Text(if (isReturning) "Returning..." else "Return Book")
+                Text(if (isReturning) "Returning…" else "Return book")
             }
         }
     }
+    HorizontalDivider(Modifier.padding(horizontal = 24.dp), color = MaterialTheme.colorScheme.outlineVariant)
 }
 
-private fun formatDate(dateString: String): String {
-    return try {
-        val formatter = DateTimeFormatter.ISO_DATE_TIME
-        val date = LocalDateTime.parse(dateString, formatter)
-        date.format(DateTimeFormatter.ofPattern("MMM dd, yyyy"))
-    } catch (e: Exception) {
-        dateString.substringBefore("T")
-    }
-}
+internal fun formatDate(value: String): String = runCatching {
+    LocalDate.parse(value.substringBefore("T")).format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM))
+}.getOrDefault(value.substringBefore("T"))

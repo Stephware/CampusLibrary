@@ -18,30 +18,14 @@ public class BookService : IBookService
 
     public async Task<List<BookDto>> GetAllBooksAsync()
     {
-        var books = await _repository.GetAllAsync();
-        return books.Select(b => new BookDto
-        {
-            Id = b.Id,
-            Title = b.Title,
-            Isbn = b.Isbn,
-            Author = b.Author,
-            YearPublished = b.YearPublished
-        }).ToList();
+        var books = await _repository.GetAllWithAvailabilityAsync();
+        return books.Select(b => ToDto(b.Book, b.IsAvailable)).ToList();
     }
 
     public async Task<BookDto?> GetBookByIdAsync(int id)
     {
-        var book = await _repository.GetByIdAsync(id);
-        if (book == null) return null;
-
-        return new BookDto
-        {
-            Id = book.Id,
-            Title = book.Title,
-            Isbn = book.Isbn,
-            Author = book.Author,
-            YearPublished = book.YearPublished
-        };
+        var book = await _repository.GetByIdWithAvailabilityAsync(id);
+        return book == null ? null : ToDto(book.Book, book.IsAvailable);
     }
 
     public async Task<BookDto> CreateBookAsync(CreateBookDto createDto)
@@ -63,14 +47,7 @@ public class BookService : IBookService
         var created = await _repository.AddAsync(book);
         _logger.LogInformation("Created book with ID {Id}", created.Id);
 
-        return new BookDto
-        {
-            Id = created.Id,
-            Title = created.Title,
-            Isbn = created.Isbn,
-            Author = created.Author,
-            YearPublished = created.YearPublished
-        };
+        return ToDto(created, isAvailable: true);
     }
 
     public async Task UpdateBookAsync(int id, UpdateBookDto updateDto)
@@ -96,6 +73,16 @@ public class BookService : IBookService
         await _repository.UpdateAsync(book);
         _logger.LogInformation("Updated book with ID {Id}", id);
     }
+
+    private static BookDto ToDto(Book book, bool isAvailable) => new()
+    {
+        Id = book.Id,
+        Title = book.Title,
+        Isbn = book.Isbn,
+        Author = book.Author,
+        YearPublished = book.YearPublished,
+        IsAvailable = isAvailable
+    };
 
     public async Task DeleteBookAsync(int id)
     {

@@ -1,5 +1,7 @@
 # Milestone 4 — How to use Members and Loans
 
+> Historical milestone record. Statements and verification below describe the original task, not a fresh run. For current setup and known limitations, use [the latest report index](../INDEX.md).
+
 ## Prerequisites
 
 Use the existing .NET 10 SDK and running `campuslibrary-mssql` Docker container. This Mac uses MSSQL on `localhost,14335`; LocalDB is not supported on macOS. Keep the existing connection string in the ignored `src/CampusLibrary.WebApi/appsettings.Development.json` (or supply secrets through environment configuration). Do not paste passwords into source files or reports.

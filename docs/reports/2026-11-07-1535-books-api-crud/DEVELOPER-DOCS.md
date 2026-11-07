@@ -1,5 +1,7 @@
 # Developer Documentation — Books API CRUD
 
+> Historical milestone record. Statements and verification below describe the original task, not a fresh run. For current setup and known limitations, use [the latest report index](../INDEX.md).
+
 **Milestone:** 3  
 **Task:** Books CRUD endpoints with Service-Repository pattern  
 **Date:** 2026-11-07 15:35  

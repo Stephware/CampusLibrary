@@ -42,41 +42,42 @@ CampusLibrary/
 │   ├── CampusLibrary.WebApi/     ← WEB API (REST, JSON)
 │   └── CampusLibrary.WebMvc/     ← WEB MVC (Razor views, admin site)
 ├── android/CampusLibraryApp/     ← ANDROID KOTLIN (calls the Web API)
-└── CampusLibrary.sln
+└── CampusLibrary.slnx
 ```
 
 Domain: **Books**, **Members**, **Loans** (a member borrows a book; a book has at most one open loan).
 
 ### 3.1 MSSQL
-- Server: SQL Server 2022 Express or LocalDB (`(localdb)\MSSQLLocalDB`).
+- Current local server: existing `campuslibrary-mssql` Azure SQL Edge container on `localhost,14335`. Preserve its data, container and port; SQL Edge is retired and must be replaced with a supported SQL host before deployment. LocalDB is Windows-only and is not used on this Mac.
 - Database name: `CampusLibraryDb`.
 - Connection string lives in `appsettings.Development.json` only, never in code. Use `dotnet user-secrets` for passwords.
 - Tables come only from EF Core migrations. Never edit the schema by hand.
 
 ### 3.2 ENTITY FRAMEWORK CORE — `CampusLibrary.Data`
-- Class library, .NET 8, packages: `Microsoft.EntityFrameworkCore.SqlServer`, `Microsoft.EntityFrameworkCore.Design`.
+- Class library, .NET 10 (`net10.0`), packages: `Microsoft.EntityFrameworkCore.SqlServer`, `Microsoft.EntityFrameworkCore.Design`.
 - `LibraryDbContext` with `DbSet<Book>`, `DbSet<Member>`, `DbSet<Loan>`.
 - Use data annotations or Fluent API for required fields, max lengths, and the unique ISBN index.
 - Seed 5 books and 3 members with `HasData`.
 - Migrations: `dotnet ef migrations add <Name> -p src/CampusLibrary.Data -s src/CampusLibrary.WebApi` then `dotnet ef database update ...` with the same flags.
 
 ### 3.3 WEB API — `CampusLibrary.WebApi`
-- ASP.NET Core Web API, .NET 8, controllers (not minimal APIs), Swagger enabled in Development.
+- ASP.NET Core Web API, .NET 10 (`net10.0`), controllers (not minimal APIs), Swagger enabled in Development.
 - Endpoints: `GET/POST/PUT/DELETE /api/books`, `/api/members`, `POST /api/loans` (borrow), `POST /api/loans/{id}/return`.
 - Use DTOs; never return EF entities directly.
 - Validate input; return `400` with a problem-details body on bad input, `404` when not found, `409` when a book is already on loan.
 - Enable CORS for the Android emulator (`http://10.0.2.2`).
 
 ### 3.4 WEB MVC — `CampusLibrary.WebMvc`
-- ASP.NET Core MVC, .NET 8, Razor views, Bootstrap (ships with the template).
-- Uses `CampusLibrary.Data` directly (same DbContext) for the librarian admin site.
+- ASP.NET Core MVC, .NET 10 (`net10.0`), Razor views, Bootstrap (ships with the template).
+- Uses MVC services → shared `CampusLibrary.Data` repositories → DbContext for the librarian admin site; controllers/views never query DbContext directly, and MVC does not call the API.
 - Pages: Books (list/create/edit/delete), Members (list/create), Loans (list open loans, return button).
 - Use `[ValidateAntiForgeryToken]` on every POST. Use tag helpers and model validation messages.
 - Run `/impeccable` on views before calling a UI task done.
 
 ### 3.5 ANDROID KOTLIN — `android/CampusLibraryApp`
-- Android Studio, Kotlin, Jetpack Compose, min SDK 26.
-- Retrofit + Gson (or kotlinx.serialization) to call the Web API at `http://10.0.2.2:<api-port>/api/`.
+- Android Studio, Kotlin 2.1.0, Jetpack Compose, min SDK 26; compile/target SDK 35 (not the original proposed 37). Existing AGP 8.7.3 supports SDK 35; use the checked-in Gradle 8.9 wrapper with JDK 17 and Android build-tools 34.0.0.
+- Retrofit + Gson uses `BuildConfig.API_BASE_URL`: debug defaults to `http://10.0.2.2:5143/api/` and accepts `-PcampusApiBaseUrl=...`; release uses HTTPS and disallows cleartext. Do not edit source URLs or disable certificate validation for local testing.
+- My Loans uses `GET /api/loans?memberId=1&openOnly=true`; returning a loan yields bodyless 204 (`Response<Unit>`). Demo member 1 is not authentication or authorization.
 - Screens: Book list, Book detail with a "Borrow" button, My loans.
 - MVVM: `ViewModel` + `StateFlow`; repository class wraps Retrofit.
 - Show loading, empty and error states on every screen.

@@ -1,5 +1,7 @@
 # Milestone 5 — How to use the admin site
 
+> Historical milestone record. Statements and verification below describe the original task, not a fresh run. For current setup and known limitations, use [the latest report index](../INDEX.md).
+
 ## Prerequisites
 
 Use the existing .NET 10 SDK and running `campuslibrary-mssql` container. On this Apple Silicon Mac, the existing SQL port is 14335; LocalDB is not used. Keep the connection string in the ignored MVC `appsettings.Development.json` or environment configuration, not in source code.

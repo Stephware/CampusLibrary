@@ -1,0 +1,14 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "design-system-font",
+        "value": "source serif 4",
+        "createdAt": "2026-11-07T14:24:45.713Z",
+        "reason": "User requested an editorial redesign; Source Serif 4 is the intentional self-hosted heading face, with DESIGN.md to be regenerated from the shipped system."
+      }
+    ]
+  }
+}

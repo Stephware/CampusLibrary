@@ -1,5 +1,7 @@
 # Developer Documentation — EF Core Entities, DbContext & Migration
 
+> Historical milestone record. Statements and verification below describe the original task, not a fresh run. For current setup and known limitations, use [the latest report index](../INDEX.md).
+
 **Milestone:** 2  
 **Task:** Create EF Core entities, DbContext, seed data, first migration, and database  
 **Date:** 2026-11-07 15:16  

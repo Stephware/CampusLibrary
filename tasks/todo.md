@@ -1,5 +1,7 @@
 # CampusLibrary Tasks
 
+> Historical Milestone 1 planning checklist, not current task status. The split setup report is repaired in [the canonical Milestone 1 folder](../docs/reports/2026-11-07-1450-solution-setup/DEVELOPER-DOCS.md). Current build facts are recorded in [SPEC.md](../SPEC.md#current-implementation-versus-the-original-setup-plan); SDK 37, host Java 26, absent wrapper, port 1433 and “no application code” statements below describe the original plan only.
+
 **Milestone 1:** Solution Structure Setup  
 **Date:** 2026-11-07  
 **Status:** Ready to implement

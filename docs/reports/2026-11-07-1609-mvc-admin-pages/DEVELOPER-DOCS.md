@@ -1,5 +1,7 @@
 # Milestone 5 — MVC admin pages
 
+> Historical milestone record. Statements and verification below describe the original task, not a fresh run. For current setup and known limitations, use [the latest report index](../INDEX.md).
+
 ## Summary
 
 Implemented the specified librarian admin pages for Books, Members and open Loans.

@@ -1,5 +1,7 @@
 # CampusLibrary — Final review flowcharts
 
+> Historical milestone record. Statements and verification below describe the original task, not a fresh run. For current setup and known limitations, use [the latest report index](../INDEX.md).
+
 ## Validated application behavior
 
 ```mermaid

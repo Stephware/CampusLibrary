@@ -11,6 +11,17 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class LibraryApiContractTest {
     @Test
+    fun availabilityIsReadFromAdditiveJsonAndMissingValueFailsClosed() {
+        val gson = com.google.gson.Gson()
+        val available = gson.fromJson("""{"id":2,"title":"Book","isbn":"123","isAvailable":true}""", com.campus.library.data.models.Book::class.java)
+        val onLoan = gson.fromJson("""{"id":2,"title":"Book","isbn":"123","isAvailable":false}""", com.campus.library.data.models.Book::class.java)
+        val legacy = gson.fromJson("""{"id":2,"title":"Book","isbn":"123"}""", com.campus.library.data.models.Book::class.java)
+        assertTrue(available.isAvailable)
+        org.junit.Assert.assertFalse(onLoan.isAvailable)
+        org.junit.Assert.assertFalse(legacy.isAvailable)
+    }
+
+    @Test
     fun memberLoansUseQueryAndReturnAcceptsNoContent() = runBlocking {
         val requests = mutableListOf<String>()
         val server = ServerSocket(0)

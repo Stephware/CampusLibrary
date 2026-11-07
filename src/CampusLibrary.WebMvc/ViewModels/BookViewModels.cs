@@ -20,4 +20,5 @@ public class BookFormViewModel
 public class BookViewModel : BookFormViewModel
 {
     public int Id { get; set; }
+    public bool IsAvailable { get; set; }
 }

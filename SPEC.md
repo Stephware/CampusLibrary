@@ -13,7 +13,20 @@ Create the foundational solution structure for **CampusLibrary**, a full-stack l
 
 **User:** IT student building a graded assignment requiring MSSQL, .NET backend, and Android mobile client.
 
-## Tech Stack
+## Current implementation versus the original setup plan
+
+This is the Milestone 1 specification, retained as historical planning evidence. Checked success boxes below are original claims, not fresh verification. In particular, the initial Android build/Studio claims were not backed by a successful Android build; the [18:17 review](docs/reports/2026-11-07-1817-final-code-review/DEVELOPER-DOCS.md) records the later actual checks and fixes.
+
+Current build-file facts (documentation reconciliation on 2026-11-07):
+- Solution is `CampusLibrary.slnx`, not the originally planned `.sln`; all three C# projects target `net10.0`. Local `dotnet --version` returned `10.0.400`; no `global.json` pins that SDK. No explicit C# language override is configured (the .NET 10 compiler default applies, not the original C# 13 label).
+- EF Core SqlServer/Design are `10.0.14`; API OpenAPI is `10.0.11`; Data explicitly pins PKCS `10.0.13`. Package versions are not SDK versions.
+- Android is min SDK **26**, compile/target SDK **35**, AGP **8.7.3**, Kotlin **2.1.0**, Gradle wrapper **8.9**, Java/JVM target **17**, Compose BOM **2024.10.00**. API 26 is the minimum device OS, not the compile platform to install. Use JDK 17, Android platform 35 and build-tools 34.0.0; host Java 26 from the original inventory is not the Gradle runtime requirement.
+- The standard Gradle wrapper is now checked in; do not rely on Studio to generate a missing wrapper or ignore the entire `gradle/` directory.
+- Existing SQL container uses host port **14335**, not the proposed 1433. SQL Edge is retired; preserve existing data/configuration and plan a separately authorized migration to a supported SQL host before deployment. The original claim that Edge is a currently supported replacement is historical, not deployment guidance.
+- Current HTTP launch profiles use API **5143** and MVC **5080**. Android debug reads `BuildConfig.API_BASE_URL` and accepts `-PcampusApiBaseUrl=...`; release requires trusted HTTPS and signing for distribution.
+- Original “no migrations yet” and future-milestone restrictions apply only to setup. Two existing migrations now implement the schema and one-open-loan constraint; retain the Service–Repository architecture and no-secrets/data-preservation rules.
+
+## Tech Stack (original Milestone 1 inventory)
 
 - **.NET SDK:** 10.0.400 (installed; also have 9.0.317 available)
 - **Language:** C# 13 (.NET 10), Kotlin for Android

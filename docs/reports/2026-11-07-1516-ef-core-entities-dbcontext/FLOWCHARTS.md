@@ -1,5 +1,7 @@
 # Flowcharts — EF Core Entities, DbContext & Migration
 
+> Historical milestone record. Statements and verification below describe the original task, not a fresh run. For current setup and known limitations, use [the latest report index](../INDEX.md).
+
 **Milestone:** 2  
 **Date:** 2026-11-07  
 
