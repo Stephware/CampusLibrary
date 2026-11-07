@@ -37,3 +37,11 @@ WEB API (LoanService build correction), ANDROID KOTLIN (ViewModel/Compose feedba
 4. Complete an actual local Impeccable finish pass, document the findings, and attach screenshots if required.
 
 Do not claim the assignment has been fully runtime verified until these checks are completed.
+
+## Verified GitHub CI result (2026-11-07 23:15 PHT)
+
+- [GitHub Actions run 42385231694](https://github.com/Stephware/CampusLibrary/actions/runs/42385231694), commit `b6d52c34`, **conclusion: success**.
+- The `.NET 10 Release Build` job completed successfully, including `dotnet restore` and `dotnet build -c Release --no-restore`.
+- The `Android Debug, Unit Tests and Lint` job completed successfully. Gradle executed `assembleDebug`, `testDebugUnitTest`, and `lintDebug`, and reported `BUILD SUCCESSFUL`.
+- The subsequent documentation-only commit does not alter the compiled application code. Its own CI run is a separate check.
+- **Not inferred from CI:** connected emulator navigation, actual local `CampusLibraryDb` data, automated SQL integration tests, physical accessibility, or Impeccable CLI completion. These remain on-Mac verification requirements.
