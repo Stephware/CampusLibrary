@@ -35,9 +35,13 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
-      - uses: android-actions/setup-android@v3
-      - name: Install Android SDK tools
-        run: sdkmanager 'platforms;android-35' 'build-tools;34.0.0'
+      - name: Install Android SDK packages
+        shell: bash
+        run: |
+          SDK_MANAGER="$(find "$ANDROID_HOME/cmdline-tools" -type f -name sdkmanager | head -n 1)"
+          test -n "$SDK_MANAGER"
+          yes | "$SDK_MANAGER" --licenses >/dev/null || true
+          "$SDK_MANAGER" 'platforms;android-35' 'build-tools;34.0.0'
       - name: Android build and unit tests
         working-directory: android/CampusLibraryApp
         run: ./gradlew --no-daemon assembleDebug testDebugUnitTest lintDebug

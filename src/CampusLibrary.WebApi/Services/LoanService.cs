@@ -22,7 +22,7 @@ public class LoanService : ILoanService
     }
 
     public async Task<List<LoanDto>> GetAllLoansAsync(int? memberId = null, bool openOnly = false) =>
-        (await _repository.GetAllAsync(memberId, openOnly)).Select(ToDto).ToList();
+        (await _repository.GetAllAsync(memberId, openOnly)).Select(loan => ToDto(loan)).ToList();
 
     public async Task<LoanDto?> GetLoanByIdAsync(int id)
     {
