@@ -1,0 +1,51 @@
+@{
+    var current = ViewContext.RouteData.Values["controller"]?.ToString();
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] · CampusLibrary</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="site-header">
+        <nav class="navbar navbar-expand-md" aria-label="Main navigation">
+            <div class="container app-container">
+                <a class="navbar-brand" asp-controller="Books" asp-action="Index">CampusLibrary</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#library-navigation"
+                        aria-controls="library-navigation" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="library-navigation">
+                    <ul class="navbar-nav ms-md-4">
+                        <li class="nav-item"><a class="nav-link" asp-controller="Books" asp-action="Index" aria-current="@(current == "Books" ? "page" : null)">Books</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Members" asp-action="Index" aria-current="@(current == "Members" ? "page" : null)">Members</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Loans" asp-action="Index" aria-current="@(current == "Loans" ? "page" : null)">Loans</a></li>
+                    </ul>
+                    <span class="nav-context ms-auto d-none d-lg-inline">Library administration</span>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main id="main-content" class="container app-container main-content" tabindex="-1">
+        @if (TempData["Success"] is string success)
+        {
+            <div class="alert alert-success" role="status">@success</div>
+        }
+        @if (TempData["Notice"] is string notice)
+        {
+            <div class="alert alert-warning" role="alert">@notice</div>
+        }
+        @RenderBody()
+    </main>
+    <footer class="site-footer"><div class="container app-container">CampusLibrary · Library administration</div></footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

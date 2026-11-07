@@ -1,0 +1,9 @@
+@model int
+@{
+    ViewData["Title"] = Model == 404 ? "Page not found" : "Request could not be completed";
+}
+<section class="empty-state">
+    <h1>@ViewData["Title"]</h1>
+    <p>@(Model == 404 ? "This page or record is no longer available. Return to the catalog to find what you need." : "Refresh the page and try again. If you were submitting a form, open a fresh copy before saving.")</p>
+    <a class="btn btn-primary" asp-controller="Books" asp-action="Index">Back to books</a>
+</section>

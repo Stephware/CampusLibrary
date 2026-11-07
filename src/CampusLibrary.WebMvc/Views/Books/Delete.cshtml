@@ -1,0 +1,19 @@
+@model BookViewModel
+@{
+    ViewData["Title"] = "Delete book";
+}
+<a class="back-link" asp-action="Index">Back to books</a>
+<div class="page-heading"><div><h1>Delete book</h1><p class="page-description">Check the book details before deleting it from the catalog.</p></div></div>
+<div class="editor-form">
+    <div asp-validation-summary="ModelOnly" class="validation-summary" role="alert"></div>
+    <dl class="record-details">
+        <dt>Title</dt><dd>@Model.Title</dd>
+        <dt>ISBN</dt><dd class="identifier">@Model.Isbn</dd>
+        <dt>Author</dt><dd>@(string.IsNullOrWhiteSpace(Model.Author) ? "Not recorded" : Model.Author)</dd>
+    </dl>
+    <p class="delete-explanation">Deleting a book cannot be undone. Books with loan history are protected and cannot be deleted.</p>
+    <form asp-action="Delete" asp-route-id="@Model.Id" method="post" class="form-actions">
+        <button type="submit" class="btn btn-danger" data-submitting-text="Deleting book…">Delete book</button>
+        <a class="btn btn-outline-secondary" asp-action="Index">Keep book</a>
+    </form>
+</div>

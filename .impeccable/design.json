@@ -1,0 +1,275 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-07T08:09:39.261010+00:00",
+  "title": "Design System: CampusLibrary",
+  "extensions": {
+    "colorMeta": {
+      "accent": {
+        "role": "primary",
+        "displayName": "Accent"
+      },
+      "accent-hover": {
+        "role": "primary",
+        "displayName": "Accent hover"
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink"
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Muted"
+      },
+      "ground": {
+        "role": "neutral",
+        "displayName": "Ground"
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Surface"
+      },
+      "border": {
+        "role": "neutral",
+        "displayName": "Border"
+      },
+      "table-heading-bg": {
+        "role": "neutral",
+        "displayName": "Table heading bg"
+      },
+      "table-heading-text": {
+        "role": "neutral",
+        "displayName": "Table heading text"
+      },
+      "input-border": {
+        "role": "neutral",
+        "displayName": "Input border"
+      },
+      "empty-border": {
+        "role": "neutral",
+        "displayName": "Empty border"
+      },
+      "focus-tint": {
+        "role": "neutral",
+        "displayName": "Focus tint"
+      },
+      "danger": {
+        "displayName": "Danger"
+      },
+      "error-text": {
+        "displayName": "Error text"
+      },
+      "error-bg": {
+        "displayName": "Error bg"
+      },
+      "error-border": {
+        "displayName": "Error border"
+      },
+      "on-loan-text": {
+        "displayName": "On loan text"
+      },
+      "on-loan-bg": {
+        "displayName": "On loan bg"
+      },
+      "success-text": {
+        "displayName": "Success text"
+      },
+      "success-bg": {
+        "displayName": "Success bg"
+      },
+      "success-border": {
+        "displayName": "Success border"
+      },
+      "notice-text": {
+        "displayName": "Notice text"
+      },
+      "notice-bg": {
+        "displayName": "Notice bg"
+      },
+      "notice-border": {
+        "displayName": "Notice border"
+      }
+    },
+    "typographyMeta": {
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Page titles."
+      },
+      "headline-mobile": {
+        "displayName": "Headline mobile",
+        "purpose": "Page titles below the medium breakpoint."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Secondary headings and empty states."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Default reading and record text."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Form labels and action text."
+      },
+      "small": {
+        "displayName": "Small",
+        "purpose": "Helper text, table headings, supporting metadata and footer."
+      },
+      "status": {
+        "displayName": "Status",
+        "purpose": "Loan status labels."
+      }
+    },
+    "shadows": [
+      {
+        "name": "input-focus",
+        "value": "0 0 0 .2rem #dbe9fb",
+        "purpose": "Focus ring for native fields; no resting surface elevation."
+      },
+      {
+        "name": "bootstrap-button-focus",
+        "value": "0 0 0 .25rem rgba(var(--bs-btn-focus-shadow-rgb), .5)",
+        "purpose": "Bootstrap variant focus ring; RGB comes from the variant, not the application accent override."
+      }
+    ],
+    "motion": [
+      {
+        "name": "bootstrap-state",
+        "value": "0.15s ease-in-out",
+        "purpose": "Button color/background/border/shadow and input border/shadow transitions; disabled under reduced motion."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "bootstrap-sm",
+        "value": "576px"
+      },
+      {
+        "name": "bootstrap-md",
+        "value": "768px"
+      },
+      {
+        "name": "stacked-records-max",
+        "value": "767.98px"
+      },
+      {
+        "name": "bootstrap-lg",
+        "value": "992px"
+      },
+      {
+        "name": "bootstrap-xl",
+        "value": "1200px"
+      },
+      {
+        "name": "bootstrap-xxl",
+        "value": "1400px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Implemented Bootstrap action variant.",
+      "html": "<button class=\"ds-button-0\" type=\"button\">Add book</button>",
+      "css": ".ds-button-0{font-family:var(--bs-font-sans-serif,system-ui, -apple-system, \"Segoe UI\", Roboto, \"Helvetica Neue\", \"Noto Sans\", \"Liberation Sans\", Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\");font-size:1rem;font-weight:600;line-height:1.5;min-height:44px;padding:.6rem 1rem;border:1px solid;border-radius:.375rem;white-space:nowrap;text-decoration:none;cursor:pointer;display:inline-block;transition:color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;background:var(--library-accent, #1859a9);color:#fff;border-color:var(--library-accent, #1859a9);}.ds-button-0:hover,.ds-button-0:focus-visible{background:var(--library-accent-hover, #10447f);color:#fff;border-color:var(--library-accent-hover, #10447f);}.ds-button-0:focus-visible{outline:0;box-shadow:0 0 0 .25rem rgba(49,132,253,.5);}.ds-button-0:active{background:var(--library-accent-hover, #10447f);border-color:var(--library-accent-hover, #10447f);color:#fff;}.ds-button-0:disabled{opacity:.65;pointer-events:none;}@media(prefers-reduced-motion:reduce){.ds-button-0{transition:none;}}"
+    },
+    {
+      "name": "Outline primary button",
+      "kind": "button",
+      "refersTo": "button-outline-primary",
+      "description": "Implemented Bootstrap action variant; compact padding shown for row actions.",
+      "html": "<button class=\"ds-button-1\" type=\"button\">Return book</button>",
+      "css": ".ds-button-1{font-family:var(--bs-font-sans-serif,system-ui, -apple-system, \"Segoe UI\", Roboto, \"Helvetica Neue\", \"Noto Sans\", \"Liberation Sans\", Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\");font-size:1rem;font-weight:600;line-height:1.5;min-height:44px;padding:.6rem 1rem;border:1px solid;border-radius:.375rem;white-space:nowrap;text-decoration:none;cursor:pointer;display:inline-block;transition:color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;background:transparent;color:var(--library-accent, #1859a9);border-color:var(--library-accent, #1859a9);padding:.5rem .8rem;font-size:.875rem;}.ds-button-1:hover,.ds-button-1:focus-visible{background:var(--library-accent, #1859a9);color:#fff;border-color:var(--library-accent, #1859a9);}.ds-button-1:focus-visible{outline:0;box-shadow:0 0 0 .25rem rgba(13,110,253,.5);}.ds-button-1:active{background:var(--library-accent-hover, #10447f);border-color:var(--library-accent-hover, #10447f);color:#fff;}.ds-button-1:disabled{opacity:.65;pointer-events:none;}@media(prefers-reduced-motion:reduce){.ds-button-1{transition:none;}}"
+    },
+    {
+      "name": "Outline secondary button",
+      "kind": "button",
+      "refersTo": "button-outline-secondary",
+      "description": "Implemented Bootstrap action variant.",
+      "html": "<button class=\"ds-button-2\" type=\"button\">Cancel</button>",
+      "css": ".ds-button-2{font-family:var(--bs-font-sans-serif,system-ui, -apple-system, \"Segoe UI\", Roboto, \"Helvetica Neue\", \"Noto Sans\", \"Liberation Sans\", Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\");font-size:1rem;font-weight:600;line-height:1.5;min-height:44px;padding:.6rem 1rem;border:1px solid;border-radius:.375rem;white-space:nowrap;text-decoration:none;cursor:pointer;display:inline-block;transition:color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;background:transparent;color:var(--library-muted, #586575);border-color:var(--library-muted, #586575);}.ds-button-2:hover,.ds-button-2:focus-visible{background:#6c757d;color:#fff;border-color:#6c757d;}.ds-button-2:focus-visible{outline:0;box-shadow:0 0 0 .25rem rgba(108,117,125,.5);}.ds-button-2:active{background:#6c757d;border-color:#6c757d;color:#fff;}.ds-button-2:disabled{opacity:.65;pointer-events:none;}@media(prefers-reduced-motion:reduce){.ds-button-2{transition:none;}}"
+    },
+    {
+      "name": "Danger button",
+      "kind": "button",
+      "refersTo": "button-danger",
+      "description": "Implemented Bootstrap action variant.",
+      "html": "<button class=\"ds-button-3\" type=\"button\">Delete book</button>",
+      "css": ".ds-button-3{font-family:var(--bs-font-sans-serif,system-ui, -apple-system, \"Segoe UI\", Roboto, \"Helvetica Neue\", \"Noto Sans\", \"Liberation Sans\", Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\");font-size:1rem;font-weight:600;line-height:1.5;min-height:44px;padding:.6rem 1rem;border:1px solid;border-radius:.375rem;white-space:nowrap;text-decoration:none;cursor:pointer;display:inline-block;transition:color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;background:var(--library-danger, #a52834);color:#fff;border-color:var(--library-danger, #a52834);}.ds-button-3:hover,.ds-button-3:focus-visible{background:#bb2d3b;color:#fff;border-color:#bb2d3b;}.ds-button-3:focus-visible{outline:0;box-shadow:0 0 0 .25rem rgba(225,83,97,.5);}.ds-button-3:active{background:#b02a37;border-color:#b02a37;color:#fff;}.ds-button-3:disabled{opacity:.65;pointer-events:none;}@media(prefers-reduced-motion:reduce){.ds-button-3{transition:none;}}"
+    },
+    {
+      "name": "Outline danger button",
+      "kind": "button",
+      "refersTo": "button-outline-danger",
+      "description": "Implemented Bootstrap action variant; compact padding shown for row actions.",
+      "html": "<button class=\"ds-button-4\" type=\"button\">Delete</button>",
+      "css": ".ds-button-4{font-family:var(--bs-font-sans-serif,system-ui, -apple-system, \"Segoe UI\", Roboto, \"Helvetica Neue\", \"Noto Sans\", \"Liberation Sans\", Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\");font-size:1rem;font-weight:600;line-height:1.5;min-height:44px;padding:.6rem 1rem;border:1px solid;border-radius:.375rem;white-space:nowrap;text-decoration:none;cursor:pointer;display:inline-block;transition:color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;background:transparent;color:var(--library-danger, #a52834);border-color:var(--library-danger, #a52834);padding:.5rem .8rem;font-size:.875rem;}.ds-button-4:hover,.ds-button-4:focus-visible{background:var(--library-danger, #a52834);color:#fff;border-color:var(--library-danger, #a52834);}.ds-button-4:focus-visible{outline:0;box-shadow:0 0 0 .25rem rgba(220,53,69,.5);}.ds-button-4:active{background:#dc3545;border-color:#dc3545;color:#fff;}.ds-button-4:disabled{opacity:.65;pointer-events:none;}@media(prefers-reduced-motion:reduce){.ds-button-4{transition:none;}}"
+    },
+    {
+      "name": "Labelled input",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Visible label, native field and adjacent helper text.",
+      "html": "<div class=\"ds-field\"><label class=\"ds-label\" for=\"ds-isbn\">ISBN</label><input class=\"ds-input\" id=\"ds-isbn\" aria-describedby=\"ds-help\" required><div class=\"ds-help\" id=\"ds-help\">Use the book's unique ISBN, up to 20 characters.</div></div>",
+      "css": ".ds-field{font-family:var(--bs-font-sans-serif,system-ui, -apple-system, \"Segoe UI\", Roboto, \"Helvetica Neue\", \"Noto Sans\", \"Liberation Sans\", Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\");color:var(--library-ink, #202b3b);}.ds-label{display:block;font-weight:600;margin-bottom:.4rem;}.ds-input{display:block;width:calc(100% - 1.5rem - 2px);min-height:46px;padding:.375rem .75rem;font:400 1rem/1.5 var(--bs-font-sans-serif,system-ui, -apple-system, \"Segoe UI\", Roboto, \"Helvetica Neue\", \"Noto Sans\", \"Liberation Sans\", Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\");color:var(--library-ink, #202b3b);background:var(--library-surface, #fff);border:1px solid #9caabb;border-radius:.375rem;caret-color:var(--library-accent, #1859a9);transition:border-color .15s ease-in-out,box-shadow .15s ease-in-out;}.ds-input:focus{outline:0;border-color:var(--library-accent, #1859a9);box-shadow:0 0 0 .2rem #dbe9fb;}.ds-input[aria-invalid=\"true\"]{border-color:var(--library-danger, #a52834);}.ds-help{margin-top:.25rem;font-size:.875rem;color:var(--library-muted, #586575);}@media(prefers-reduced-motion:reduce){.ds-input{transition:none;}}"
+    },
+    {
+      "name": "Navigation links",
+      "kind": "nav",
+      "refersTo": "nav-link",
+      "description": "Current page uses blue, semibold type and a bottom rule; menu collapse uses Bootstrap in the app.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Main navigation\"><a class=\"ds-link\" href=\"#books\" aria-current=\"page\">Books</a><a class=\"ds-link\" href=\"#members\">Members</a><a class=\"ds-link\" href=\"#loans\">Loans</a></nav>",
+      "css": ".ds-nav{display:flex;font:400 1rem/1.55 var(--bs-font-sans-serif,system-ui, -apple-system, \"Segoe UI\", Roboto, \"Helvetica Neue\", \"Noto Sans\", \"Liberation Sans\", Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\");background:var(--library-surface, #fff);}.ds-link{display:block;padding:.65rem .85rem;color:var(--library-muted, #586575);border-bottom:2px solid transparent;text-decoration:none;}.ds-link:hover{color:var(--library-accent, #1859a9);}.ds-link[aria-current=\"page\"]{color:var(--library-accent, #1859a9);border-bottom-color:var(--library-accent, #1859a9);font-weight:600;}.ds-link:focus-visible{outline:3px solid var(--library-accent, #1859a9);outline-offset:3px;}@media(max-width:767.98px){.ds-nav{flex-direction:column;}.ds-link{min-height:44px;}}"
+    },
+    {
+      "name": "Loan status labels",
+      "kind": "chip",
+      "refersTo": "loan-status",
+      "description": "Noninteractive text labels for open and overdue loans.",
+      "html": "<span class=\"ds-status\">On loan</span> <span class=\"ds-status ds-overdue\">Overdue</span>",
+      "css": ".ds-status{display:inline-block;font-family:var(--bs-font-sans-serif,system-ui, -apple-system, \"Segoe UI\", Roboto, \"Helvetica Neue\", \"Noto Sans\", \"Liberation Sans\", Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\");font-size:.8rem;line-height:1.55;font-weight:600;padding:.3rem .55rem;border-radius:.3rem;white-space:nowrap;color:#164f85;background:#e3edf8;}.ds-overdue{color:#842029;background:#f8d7da;}"
+    },
+    {
+      "name": "Editor surface",
+      "kind": "card",
+      "refersTo": "editor-form",
+      "description": "Shared flat surface for full-page forms and record confirmation.",
+      "html": "<section class=\"ds-editor\"><dl class=\"ds-details\"><dt>Title</dt><dd>Book title</dd><dt>ISBN</dt><dd>9780000000000</dd></dl><p class=\"ds-delete-explanation\">Deleting a book cannot be undone. Books with loan history are protected and cannot be deleted.</p></section>",
+      "css": ".ds-editor{max-width:42rem;padding:2rem;background:var(--library-surface, #fff);color:var(--library-ink, #202b3b);border:1px solid var(--library-border, #d8dfe8);border-radius:.5rem;font:400 1rem/1.55 var(--bs-font-sans-serif,system-ui, -apple-system, \"Segoe UI\", Roboto, \"Helvetica Neue\", \"Noto Sans\", \"Liberation Sans\", Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\");}.ds-details{margin-bottom:1.5rem;}.ds-details dt{margin-top:1rem;font-size:.875rem;color:var(--library-muted, #586575);font-weight:700;}.ds-details dd{margin:.25rem 0 0;overflow-wrap:anywhere;}.ds-delete-explanation{max-width:65ch;color:var(--library-muted, #586575);}@media(max-width:767.98px){.ds-editor{padding:1.25rem;}}"
+    },
+    {
+      "name": "Responsive record list",
+      "kind": "custom",
+      "refersTo": "list-surface",
+      "description": "Semantic table becomes labelled stacked records at the mobile breakpoint.",
+      "html": "<div class=\"ds-table-surface\" role=\"region\" aria-label=\"Book catalog\" tabindex=\"0\"><table class=\"ds-table\"><thead><tr><th scope=\"col\">Title</th><th scope=\"col\">ISBN</th></tr></thead><tbody><tr><th scope=\"row\">Book title</th><td data-label=\"ISBN\">9780000000000</td></tr></tbody></table></div>",
+      "css": ".ds-table-surface{overflow-x:auto;background:var(--library-surface, #fff);border:1px solid var(--library-border, #d8dfe8);border-radius:.5rem;}.ds-table-surface:focus-visible{outline:3px solid var(--library-accent, #1859a9);outline-offset:3px;}.ds-table{width:100%;min-width:680px;border-collapse:collapse;color:var(--library-ink, #202b3b);font:400 1rem/1.55 var(--bs-font-sans-serif,system-ui, -apple-system, \"Segoe UI\", Roboto, \"Helvetica Neue\", \"Noto Sans\", \"Liberation Sans\", Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\");text-align:left;}.ds-table th,.ds-table td{padding:1rem 1.2rem;}.ds-table thead th{background:#eef2f7;color:#47556a;font-size:.875rem;font-weight:600;}.ds-table tbody th{font-weight:600;}@media(max-width:767.98px){.ds-table,.ds-table tbody{display:block;min-width:0;}.ds-table thead{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);}.ds-table tbody tr{display:grid;padding:.75rem 0;}.ds-table tbody tr>*{display:block;padding:.5rem 1.2rem;overflow-wrap:anywhere;}.ds-table td[data-label]::before{content:attr(data-label);display:block;margin-bottom:.15rem;color:var(--library-muted, #586575);font-size:.8rem;font-weight:600;}}"
+    }
+  ],
+  "narrative": {
+    "overview": "CampusLibrary extends the existing Bootstrap MVC starter into a direct library administration surface. Lists and full-page forms carry the work; system typography, white surfaces, muted supporting text and restrained blue actions keep records easy to scan.\n\nThis document captures the implemented MVC interface, not an institutional identity. The product name is the only supplied brand asset. There are no image, illustration, logo or composition assets in this visual system.",
+    "keyCharacteristics": [
+      "Lists and forms in the first viewport.",
+      "Flat bordered surfaces on a pale background.",
+      "Native HTML inputs and Bootstrap navigation and button conventions.",
+      "Visible labels, recovery feedback and keyboard focus.",
+      "Desktop tables become labelled stacked records on mobile."
+    ],
+    "rules": [],
+    "dos": [
+      "Do put the page title, short task description and relevant action before the record list or form.",
+      "Do reuse the shared container, native inputs and Bootstrap states.",
+      "Do pair status and validation colors with explicit text.",
+      "Do keep mobile record labels, wrapping long values and reachable row actions.",
+      "Do preserve visible keyboard focus, the skip link and reduced-motion behavior."
+    ],
+    "donts": [
+      "Don't introduce school logos, custom fonts or image assets without a new design decision.",
+      "Don't turn the administration lists into decorative dashboards or promotional hero sections.",
+      "Don't use danger styling for ordinary navigation or primary save actions.",
+      "Don't hide validation messages, replace visible labels with placeholders or encode status through color alone.",
+      "Don't force desktop-width table columns on narrow screens."
+    ]
+  }
+}

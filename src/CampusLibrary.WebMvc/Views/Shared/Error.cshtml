@@ -1,0 +1,13 @@
+@model ErrorViewModel
+@{
+    ViewData["Title"] = "Something went wrong";
+}
+<section class="empty-state">
+    <h1>Something went wrong</h1>
+    <p>We couldn't complete your request. Try again in a moment. If it keeps happening, share the request ID with the person maintaining the library system.</p>
+    @if (Model.ShowRequestId)
+    {
+        <p>Request ID: <code>@Model.RequestId</code></p>
+    }
+    <a class="btn btn-primary" asp-controller="Books" asp-action="Index">Back to books</a>
+</section>

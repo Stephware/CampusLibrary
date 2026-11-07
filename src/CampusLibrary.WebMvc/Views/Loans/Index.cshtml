@@ -1,0 +1,36 @@
+@model List<LoanViewModel>
+@{
+    ViewData["Title"] = "Open loans";
+}
+<div class="page-heading"><div><h1>Open loans</h1><p class="page-description">See which books are out and record them when they come back.</p></div></div>
+@if (Model.Count == 0)
+{
+    <section class="empty-state" aria-labelledby="empty-loans">
+        <h2 id="empty-loans">No open loans</h2>
+        <p>There are no books waiting to be returned. New borrowing activity will appear here.</p>
+        <a class="btn btn-outline-primary" asp-controller="Books" asp-action="Index">View book catalog</a>
+    </section>
+}
+else
+{
+    <div class="table-responsive table-surface" role="region" aria-label="Open loans, ordered by due date" tabindex="0">
+        <table class="table align-middle mb-0">
+            <caption class="visually-hidden">Open loans ordered by due date; dates in UTC</caption>
+            <thead><tr><th scope="col">Book</th><th scope="col">Member</th><th scope="col">Borrowed</th><th scope="col">Due</th><th scope="col">Status</th><th scope="col" class="text-end">Action</th></tr></thead>
+            <tbody>
+                @foreach (var loan in Model)
+                {
+                    <tr>
+                        <th scope="row" class="book-title">@loan.BookTitle<span class="cell-secondary identifier">@loan.Isbn</span></th>
+                        <td data-label="Member">@loan.MemberName<span class="cell-secondary identifier">@loan.StudentId</span></td>
+                        <td class="date-cell" data-label="Borrowed"><time datetime="@loan.BorrowDate.ToString("yyyy-MM-dd")">@loan.BorrowDate.ToString("dd MMM yyyy")</time></td>
+                        <td class="date-cell" data-label="Due"><time datetime="@loan.DueDate.ToString("yyyy-MM-dd")">@loan.DueDate.ToString("dd MMM yyyy")</time></td>
+                        <td data-label="Status"><span class="loan-status @(loan.IsOverdue ? "status-overdue" : "status-on-loan")">@(loan.IsOverdue ? "Overdue" : "On loan")</span></td>
+                        <td><form asp-action="Return" asp-route-id="@loan.Id" method="post" class="row-actions"><button type="submit" class="btn btn-outline-primary btn-sm" aria-label="Return @loan.BookTitle for @loan.MemberName" data-submitting-text="Returning…">Return book</button></form></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <p class="list-count">@Model.Count open @(Model.Count == 1 ? "loan" : "loans") · Earliest due first · Dates shown in UTC</p>
+}

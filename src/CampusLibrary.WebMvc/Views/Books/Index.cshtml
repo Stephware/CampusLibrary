@@ -1,0 +1,38 @@
+@model List<BookViewModel>
+@{
+    ViewData["Title"] = "Books";
+}
+<div class="page-heading">
+    <div><h1>Books</h1><p class="page-description">Manage the books in your library catalog.</p></div>
+    <a class="btn btn-primary" asp-action="Create">Add book</a>
+</div>
+@if (Model.Count == 0)
+{
+    <section class="empty-state" aria-labelledby="empty-books">
+        <h2 id="empty-books">Start your book catalog</h2>
+        <p>Add your first book with its title and ISBN. It will then be available for borrowing.</p>
+        <a class="btn btn-primary" asp-action="Create">Add your first book</a>
+    </section>
+}
+else
+{
+    <div class="table-responsive table-surface" role="region" aria-label="Book catalog" tabindex="0">
+        <table class="table align-middle mb-0">
+            <caption class="visually-hidden">Library books and catalog actions</caption>
+            <thead><tr><th scope="col">Title</th><th scope="col">Author</th><th scope="col">ISBN</th><th scope="col">Year</th><th scope="col" class="text-end">Actions</th></tr></thead>
+            <tbody>
+                @foreach (var book in Model)
+                {
+                    <tr>
+                        <th scope="row" class="book-title">@book.Title</th>
+                        <td data-label="Author">@(string.IsNullOrWhiteSpace(book.Author) ? "Not recorded" : book.Author)</td>
+                        <td class="identifier" data-label="ISBN">@book.Isbn</td>
+                        <td class="identifier" data-label="Year">@(book.YearPublished?.ToString() ?? "Not recorded")</td>
+                        <td><div class="row-actions"><a class="btn btn-outline-primary btn-sm" asp-action="Edit" asp-route-id="@book.Id" aria-label="Edit @book.Title">Edit</a><a class="btn btn-outline-danger btn-sm" asp-action="Delete" asp-route-id="@book.Id" aria-label="Delete @book.Title">Delete</a></div></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <p class="list-count">@Model.Count @(Model.Count == 1 ? "book" : "books") in the catalog</p>
+}

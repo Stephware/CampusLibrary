@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.campus.library.ui.viewmodels.BookDetailViewModelTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-11-07T10:10:03" hostname="Stephens-MacBook-Pro.local" time="0.028">
+  <properties/>
+  <testcase name="latePreviousBookDoesNotReplaceCurrentDetail" classname="com.campus.library.ui.viewmodels.BookDetailViewModelTest" time="0.027"/>
+  <testcase name="borrowMustMatchDisplayedBook" classname="com.campus.library.ui.viewmodels.BookDetailViewModelTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,96 @@
+# .NET
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+.vs/
+.vscode/
+*.swp
+*~
+.DS_Store
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa]rm/
+[Aa]rm64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# Visual Studio cache/options
+.vs/
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Rider
+.idea/
+*.sln.iml
+
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# ASP.NET
+project.lock.json
+project.fragment.lock.json
+artifacts/
+**/Properties/launchSettings.json
+
+# Secrets (NEVER commit these)
+appsettings.Development.json
+*.pfx
+*.p12
+secrets.json
+
+# Android
+*.apk
+*.aab
+*.ap_
+*.dex
+*.class
+bin/
+gen/
+out/
+.gradle/
+build/
+local.properties
+.idea/
+*.iml
+*.ipr
+*.iws
+.DS_Store
+captures/
+.externalNativeBuild
+.cxx
+
+# Keep the Gradle wrapper scripts, JAR and checksum-pinned properties for reproducible builds.
+
+# Android Studio
+*.hprof
+lint/generated/
+lint/intermediates/
+lint/outputs/
+
+# Docker
+*.log
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Reports (keep INDEX.md, ignore temp files)
+docs/reports/**/*.tmp

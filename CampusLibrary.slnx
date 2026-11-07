@@ -1,0 +1,7 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/CampusLibrary.Data/CampusLibrary.Data.csproj" />
+    <Project Path="src/CampusLibrary.WebApi/CampusLibrary.WebApi.csproj" />
+    <Project Path="src/CampusLibrary.WebMvc/CampusLibrary.WebMvc.csproj" />
+  </Folder>
+</Solution>

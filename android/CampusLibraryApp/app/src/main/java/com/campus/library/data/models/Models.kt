@@ -1,0 +1,33 @@
+package com.campus.library.data.models
+
+data class Book(
+    val id: Int,
+    val title: String,
+    val isbn: String,
+    val author: String?,
+    val yearPublished: Int?
+)
+
+data class Member(
+    val id: Int,
+    val name: String,
+    val email: String,
+    val studentId: String,
+    val registeredDate: String
+)
+
+data class Loan(
+    val id: Int,
+    val bookId: Int,
+    val memberId: Int,
+    val borrowDate: String,
+    val dueDate: String,
+    val returnDate: String?,
+    val book: Book? = null,
+    val member: Member? = null
+)
+
+data class CreateLoanRequest(
+    val bookId: Int,
+    val memberId: Int
+)

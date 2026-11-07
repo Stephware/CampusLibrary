@@ -1,0 +1,18 @@
+{
+  "reviewed_at": "2026-11-07T18:17:03.576484+08:00",
+  "dotnet_debug_build": "passed, 0 warnings/errors",
+  "dotnet_release_build": "passed, 0 warnings/errors",
+  "api_mvc_integration_tests": 18,
+  "android_unit_tests": 3,
+  "browser_rendered_states": 21,
+  "android_lint": {
+    "errors": 0,
+    "warnings": 51
+  },
+  "release_publish_excludes_development_settings": true,
+  "nuget_known_vulnerabilities_reported": 0,
+  "ef_model_drift": false,
+  "database_schema_changes": false,
+  "test_database_cleanup": "completed",
+  "production_readiness": "not approved: retired SQL Edge, demo identity/no auth, release endpoint/signing setup outstanding"
+}

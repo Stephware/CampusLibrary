@@ -1,0 +1,215 @@
+{
+  "results": [
+    {
+      "name": "desktop-books",
+      "width": 1440,
+      "scroll": 1425,
+      "title": "Books · CampusLibrary",
+      "headings": 1,
+      "background": "rgb(245, 247, 250)",
+      "main": true,
+      "labels": true
+    },
+    {
+      "name": "desktop-members",
+      "width": 1440,
+      "scroll": 1440,
+      "title": "Members · CampusLibrary",
+      "headings": 1,
+      "background": "rgb(245, 247, 250)",
+      "main": true,
+      "labels": true
+    },
+    {
+      "name": "desktop-loans",
+      "width": 1440,
+      "scroll": 1440,
+      "title": "Open loans · CampusLibrary",
+      "headings": 1,
+      "background": "rgb(245, 247, 250)",
+      "main": true,
+      "labels": true
+    },
+    {
+      "name": "desktop-create-book",
+      "width": 1440,
+      "scroll": 1440,
+      "title": "Add book · CampusLibrary",
+      "headings": 1,
+      "background": "rgb(245, 247, 250)",
+      "main": true,
+      "labels": true
+    },
+    {
+      "name": "desktop-edit-book",
+      "width": 1440,
+      "scroll": 1440,
+      "title": "Edit book · CampusLibrary",
+      "headings": 1,
+      "background": "rgb(245, 247, 250)",
+      "main": true,
+      "labels": true
+    },
+    {
+      "name": "desktop-delete-book",
+      "width": 1440,
+      "scroll": 1440,
+      "title": "Delete book · CampusLibrary",
+      "headings": 1,
+      "background": "rgb(245, 247, 250)",
+      "main": true,
+      "labels": true
+    },
+    {
+      "name": "desktop-create-member",
+      "width": 1440,
+      "scroll": 1440,
+      "title": "Add member · CampusLibrary",
+      "headings": 1,
+      "background": "rgb(245, 247, 250)",
+      "main": true,
+      "labels": true
+    },
+    {
+      "name": "desktop-not-found",
+      "width": 1440,
+      "scroll": 1440,
+      "title": "Page not found · CampusLibrary",
+      "headings": 1,
+      "background": "rgb(245, 247, 250)",
+      "main": true,
+      "labels": true
+    },
+    {
+      "name": "desktop-validation",
+      "width": 1440,
+      "scroll": 1440,
+      "title": "Add book · CampusLibrary",
+      "headings": 1,
+      "background": "rgb(245, 247, 250)",
+      "main": true,
+      "labels": true
+    },
+    {
+      "name": "desktop-keyboard-focus",
+      "width": 1440,
+      "scroll": 1425,
+      "title": "Books · CampusLibrary",
+      "headings": 1,
+      "background": "rgb(245, 247, 250)",
+      "main": true,
+      "labels": true
+    },
+    {
+      "name": "mobile-books",
+      "width": 390,
+      "scroll": 390,
+      "title": "Books · CampusLibrary",
+      "headings": 1,
+      "background": "rgb(245, 247, 250)",
+      "main": true,
+      "labels": true
+    },
+    {
+      "name": "mobile-members",
+      "width": 390,
+      "scroll": 390,
+      "title": "Members · CampusLibrary",
+      "headings": 1,
+      "background": "rgb(245, 247, 250)",
+      "main": true,
+      "labels": true
+    },
+    {
+      "name": "mobile-loans",
+      "width": 390,
+      "scroll": 390,
+      "title": "Open loans · CampusLibrary",
+      "headings": 1,
+      "background": "rgb(245, 247, 250)",
+      "main": true,
+      "labels": true
+    },
+    {
+      "name": "mobile-create-book",
+      "width": 390,
+      "scroll": 390,
+      "title": "Add book · CampusLibrary",
+      "headings": 1,
+      "background": "rgb(245, 247, 250)",
+      "main": true,
+      "labels": true
+    },
+    {
+      "name": "mobile-edit-book",
+      "width": 390,
+      "scroll": 390,
+      "title": "Edit book · CampusLibrary",
+      "headings": 1,
+      "background": "rgb(245, 247, 250)",
+      "main": true,
+      "labels": true
+    },
+    {
+      "name": "mobile-delete-book",
+      "width": 390,
+      "scroll": 390,
+      "title": "Delete book · CampusLibrary",
+      "headings": 1,
+      "background": "rgb(245, 247, 250)",
+      "main": true,
+      "labels": true
+    },
+    {
+      "name": "mobile-create-member",
+      "width": 390,
+      "scroll": 390,
+      "title": "Add member · CampusLibrary",
+      "headings": 1,
+      "background": "rgb(245, 247, 250)",
+      "main": true,
+      "labels": true
+    },
+    {
+      "name": "mobile-not-found",
+      "width": 390,
+      "scroll": 390,
+      "title": "Page not found · CampusLibrary",
+      "headings": 1,
+      "background": "rgb(245, 247, 250)",
+      "main": true,
+      "labels": true
+    },
+    {
+      "name": "mobile-validation",
+      "width": 390,
+      "scroll": 390,
+      "title": "Add book · CampusLibrary",
+      "headings": 1,
+      "background": "rgb(245, 247, 250)",
+      "main": true,
+      "labels": true
+    },
+    {
+      "name": "mobile-navigation",
+      "width": 390,
+      "scroll": 390,
+      "title": "Books · CampusLibrary",
+      "headings": 1,
+      "background": "rgb(245, 247, 250)",
+      "main": true,
+      "labels": true
+    },
+    {
+      "name": "mobile-return-success",
+      "width": 390,
+      "scroll": 390,
+      "title": "Open loans · CampusLibrary",
+      "headings": 1,
+      "background": "rgb(245, 247, 250)",
+      "main": true,
+      "labels": true
+    }
+  ],
+  "diagnostics": []
+}

@@ -1,0 +1,32 @@
+@model MemberFormViewModel
+@{
+    ViewData["Title"] = "Add member";
+}
+<a class="back-link" asp-action="Index">Back to members</a>
+<div class="page-heading"><div><h1>Add member</h1><p class="page-description">Register a borrower. All fields are required.</p></div></div>
+<form asp-action="Create" method="post" class="editor-form">
+    <div asp-validation-summary="ModelOnly" class="validation-summary" role="alert"></div>
+    <div class="mb-4">
+        <label asp-for="Name" class="form-label"></label>
+        <input asp-for="Name" class="form-control" maxlength="100" autocomplete="name" aria-describedby="Name-error" required />
+        <span asp-validation-for="Name" id="Name-error" class="field-error"></span>
+    </div>
+    <div class="mb-4">
+        <label asp-for="Email" class="form-label"></label>
+        <input asp-for="Email" class="form-control" type="email" maxlength="100" autocomplete="email" aria-describedby="Email-error" required />
+        <span asp-validation-for="Email" id="Email-error" class="field-error"></span>
+    </div>
+    <div class="mb-4">
+        <label asp-for="StudentId" class="form-label"></label>
+        <input asp-for="StudentId" class="form-control" maxlength="20" aria-describedby="student-help StudentId-error" required />
+        <div id="student-help" class="form-text">Use the member's unique campus student ID.</div>
+        <span asp-validation-for="StudentId" id="StudentId-error" class="field-error"></span>
+    </div>
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary" data-submitting-text="Adding member…">Add member</button>
+        <a class="btn btn-outline-secondary" asp-action="Index">Cancel</a>
+    </div>
+</form>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
