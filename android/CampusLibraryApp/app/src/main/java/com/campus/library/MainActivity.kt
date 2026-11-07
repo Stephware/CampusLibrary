@@ -29,10 +29,18 @@ class MainActivity : ComponentActivity() {
 fun CampusLibraryApp() {
     var route by rememberSaveable { mutableStateOf("catalog") }
     var bookId by rememberSaveable { mutableIntStateOf(0) }
+    var borrowFeedback by rememberSaveable { mutableStateOf<String?>(null) }
     BackHandler(route != "catalog") { route = "catalog" }
     when (route) {
-        "detail" -> BookDetailScreen(bookId, { route = "catalog" }, { route = "loans" })
-        "loans" -> MyLoansScreen(onBackClick = { route = "catalog" })
+        "detail" -> BookDetailScreen(bookId, { route = "catalog" }, {
+            borrowFeedback = "Book borrowed successfully. You can return it from My loans."
+            route = "loans"
+        })
+        "loans" -> MyLoansScreen(
+            onBackClick = { route = "catalog" },
+            borrowConfirmation = borrowFeedback,
+            onBorrowConfirmationShown = { borrowFeedback = null }
+        )
         else -> BookListScreen({ bookId = it; route = "detail" }, { route = "loans" })
     }
 }

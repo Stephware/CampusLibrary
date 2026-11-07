@@ -30,7 +30,9 @@ data class Loan(
     val dueDate: String,
     val returnDate: String?,
     val book: Book? = null,
-    val member: Member? = null
+    val member: Member? = null,
+    val bookTitle: String? = null,
+    val bookAuthor: String? = null
 )
 
 data class CreateLoanRequest(

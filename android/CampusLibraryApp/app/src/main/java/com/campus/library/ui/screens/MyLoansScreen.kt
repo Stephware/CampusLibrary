@@ -17,10 +17,21 @@ import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 
 @Composable
-fun MyLoansScreen(onBackClick: () -> Unit, viewModel: LoansViewModel = viewModel()) {
+fun MyLoansScreen(
+    onBackClick: () -> Unit,
+    borrowConfirmation: String? = null,
+    onBorrowConfirmationShown: () -> Unit = {},
+    viewModel: LoansViewModel = viewModel()
+) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val snackbar = remember { SnackbarHostState() }
     RefreshOnResume { viewModel.loadLoans() }
+    LaunchedEffect(borrowConfirmation) {
+        if (borrowConfirmation != null) {
+            snackbar.showSnackbar(borrowConfirmation)
+            onBorrowConfirmationShown()
+        }
+    }
     val message = (uiState as? LoansUiState.Success)?.message
     LaunchedEffect(message) {
         if (message != null) { snackbar.showSnackbar(message); viewModel.clearMessage() }
@@ -48,10 +59,15 @@ fun MyLoansScreen(onBackClick: () -> Unit, viewModel: LoansViewModel = viewModel
 @Composable
 fun LoanCard(loan: Loan, isReturning: Boolean, onReturnClick: () -> Unit, canReturn: Boolean = true) {
     val overdue = runCatching { LocalDate.parse(loan.dueDate.substringBefore("T")).isBefore(LocalDate.now()) }.getOrDefault(false)
+    val title = loan.bookTitle?.takeIf { it.isNotBlank() }
+        ?: loan.book?.title?.takeIf { it.isNotBlank() }
+        ?: "Book #${loan.bookId}"
+    val author = loan.bookAuthor?.takeIf { it.isNotBlank() }
+        ?: loan.book?.author?.takeIf { it.isNotBlank() }
     Surface(color = MaterialTheme.colorScheme.surface) {
         Column(Modifier.fillMaxWidth().padding(24.dp)) {
-            Text(loan.book?.title ?: "Book #${loan.bookId}", style = MaterialTheme.typography.titleLarge)
-            loan.book?.author?.let {
+            Text(title, style = MaterialTheme.typography.titleLarge)
+            author?.let {
                 Spacer(Modifier.height(6.dp))
                 Text(it, style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }

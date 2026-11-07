@@ -45,7 +45,8 @@ class Milestone4Tests(unittest.TestCase):
 
     def book(self):
         book, _ = self.call('POST', '/api/books',
-                            {'title': 'Milestone 4 test', 'isbn': uuid.uuid4().hex[:20]}, 201)
+                            {'title': 'Milestone 4 test', 'isbn': uuid.uuid4().hex[:20],
+                             'author': 'Campus Test Author'}, 201)
         return book
 
     def borrow(self, book, member):
@@ -129,6 +130,8 @@ class Milestone4Tests(unittest.TestCase):
         self.assertIs(book['isAvailable'], True)
         self.assert_availability(book, True)
         loan = self.borrow(book, member)
+        self.assertEqual(loan['bookTitle'], book['title'])
+        self.assertEqual(loan['bookAuthor'], book['author'])
         self.assert_availability(book, False)
         self.assert_availability(other, True)
         self.call('DELETE', f"/api/books/{other['id']}", status=204)
@@ -143,6 +146,8 @@ class Milestone4Tests(unittest.TestCase):
         self.call('DELETE', f"/api/books/{book['id']}", status=409)
         loans, _ = self.call('GET', f"/api/loans?memberId={member['id']}&openOnly=true")
         self.assertEqual([x['id'] for x in loans], [loan['id']])
+        self.assertEqual(loans[0]['bookTitle'], book['title'])
+        self.assertEqual(loans[0]['bookAuthor'], book['author'])
         self.call('POST', f"/api/loans/{loan['id']}/return", status=204)
         returned, _ = self.call('GET', f"/api/loans/{loan['id']}")
         self.assertIsNotNone(returned['returnDate'])
