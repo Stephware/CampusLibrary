@@ -38,6 +38,12 @@ class BookDetailViewModel(private val repository: LibraryRepository = LibraryRep
         }
     }
 
+    /** Consume navigation feedback so reopening this screen does not navigate again. */
+    fun acknowledgeBorrowSuccess() {
+        if (_uiState.value is BookDetailUiState.BorrowSuccess)
+            _uiState.value = BookDetailUiState.Loading
+    }
+
     fun borrowBook(bookId: Int) {
         val state = _uiState.value as? BookDetailUiState.Success ?: return
         if (state.book.id != bookId || state.isBorrowing || !state.book.isAvailable) return

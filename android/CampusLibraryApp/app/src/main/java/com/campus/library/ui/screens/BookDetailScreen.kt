@@ -19,7 +19,12 @@ import com.campus.library.ui.viewmodels.*
 fun BookDetailScreen(bookId: Int, onBackClick: () -> Unit, onBorrowSuccess: () -> Unit, viewModel: BookDetailViewModel = viewModel()) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     RefreshOnResume { viewModel.loadBook(bookId) }
-    LaunchedEffect(uiState) { if (uiState is BookDetailUiState.BorrowSuccess) onBorrowSuccess() }
+    LaunchedEffect(uiState) {
+        if (uiState is BookDetailUiState.BorrowSuccess) {
+            viewModel.acknowledgeBorrowSuccess()
+            onBorrowSuccess()
+        }
+    }
     LibraryScaffold("book details", { viewModel.loadBook(bookId) }, onBackClick) { padding ->
         Box(Modifier.fillMaxSize().padding(padding)) {
             when (val state = uiState) {

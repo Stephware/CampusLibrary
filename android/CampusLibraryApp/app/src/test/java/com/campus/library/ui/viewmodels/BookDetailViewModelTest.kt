@@ -90,6 +90,11 @@ class BookDetailViewModelTest {
             assertEquals(listOf(2), api.borrowedBookIds)
             assertEquals(com.campus.library.data.models.DemoMember.ID, api.borrowedMemberId)
             assertTrue(viewModel.uiState.value is BookDetailUiState.BorrowSuccess)
+            viewModel.acknowledgeBorrowSuccess()
+            assertTrue(viewModel.uiState.value is BookDetailUiState.Loading)
+            viewModel.loadBook(2)
+            runCurrent()
+            assertEquals(2, (viewModel.uiState.value as BookDetailUiState.Success).book.id)
         } finally { Dispatchers.resetMain() }
     }
 

@@ -26,10 +26,11 @@ fun MyLoansScreen(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val snackbar = remember { SnackbarHostState() }
     RefreshOnResume { viewModel.loadLoans() }
-    LaunchedEffect(borrowConfirmation) {
+    // Run once for this route entry; clearing the message must not cancel the snackbar.
+    LaunchedEffect(Unit) {
         if (borrowConfirmation != null) {
-            snackbar.showSnackbar(borrowConfirmation)
             onBorrowConfirmationShown()
+            snackbar.showSnackbar(borrowConfirmation)
         }
     }
     val message = (uiState as? LoansUiState.Success)?.message
