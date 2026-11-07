@@ -26,3 +26,4 @@ Each indexed report folder contains:
 - 2026-11-07 18:17 — Final code review, verified fixes and remaining limitations — [folder](./2026-11-07-1817-final-code-review/)
 - 2026-11-07 22:24 — Library surfaces, API availability/Swagger and historical documentation repair (final integrated verification pending) — [folder](./2026-11-07-2224-library-follow-up/)
 - 2026-11-07 22:50 — Real loan book titles, borrow feedback and Bound in Ink documentation — [folder](./2026-11-07-2250-loan-title-finalization/)
+- 2026-11-07 23:13 — Submission readiness, code-led visual audit, live verification harness and CI regression fixes — [folder](./2026-11-07-2313-submission-readiness/)
